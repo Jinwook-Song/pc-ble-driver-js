@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/NordicSemiconductor/pc-ble-driver-js.git"
+    "url": "https://github.com/Jinwook-Song/pc-ble-driver-js.git"
   },
   "binary": {
     "module_name": "pc-ble-driver-js-sd_api_v5",

@@ -51,10 +51,10 @@ export declare interface ConnectionParameters {
  *
  */
 export declare interface SecurityKeyExchange {
-  id: boolean;   /**< Identity Resolving Key and Identity Address Information. */
-  enc: boolean;  /**< Long Term Key and Master Identification. */
-  sign: boolean; /**< Connection Signature Resolving Key. */
-  link: boolean; /**< Derive the Link Key from the LTK. */
+  id: boolean /**< Identity Resolving Key and Identity Address Information. */;
+  enc: boolean /**< Long Term Key and Master Identification. */;
+  sign: boolean /**< Connection Signature Resolving Key. */;
+  link: boolean /**< Derive the Link Key from the LTK. */;
 }
 
 export declare interface SecurityParameters {
@@ -129,11 +129,11 @@ export declare interface Device {
   connectionHandle: number;
   connected: boolean;
   txPower: number;
-  minConnectionInterval:number;
-  maxConnectionInterval:number;
-  slaveLatency:number;
-  connectionSupervisionTimeout:number;
-  paired:boolean;
+  minConnectionInterval: number;
+  maxConnectionInterval: number;
+  slaveLatency: number;
+  connectionSupervisionTimeout: number;
+  paired: boolean;
   name: string;
   rssi: number;
   rssi_level: number;
@@ -162,7 +162,8 @@ export declare interface CharacteristicProperties {
   auth_signed_wr: boolean;
 }
 
-export declare interface CharacteristicExtProperties extends CharacteristicProperties {
+export declare interface CharacteristicExtProperties
+  extends CharacteristicProperties {
   reliable_wr: boolean;
   wr_aux: boolean;
 }
@@ -186,7 +187,7 @@ export declare interface Descriptor {
   value: Array<number>;
 }
 
-declare class Adapter extends EventEmitter {
+export declare class Adapter extends EventEmitter {
   instanceId: string;
   driver: any;
   state: AdapterState;
@@ -197,7 +198,11 @@ declare class Adapter extends EventEmitter {
   startScan(options: ScanParameters, callback?: (err: any) => void): void;
   stopScan(callback?: (err: any) => void): void;
 
-  connect(deviceAddress: string | Address, options: ConnectionOptions, callback?: (err: any) => void): void;
+  connect(
+    deviceAddress: string | Address,
+    options: ConnectionOptions,
+    callback?: (err: any) => void
+  ): void;
   cancelConnect(callback?: (err: any) => void): void;
   disconnect(deviceInstanceId: string, callback?: (err: any) => void): void;
 
@@ -206,79 +211,252 @@ declare class Adapter extends EventEmitter {
   getDevices(): Device[];
   getDevice(deviceInstanceId: string): Device;
 
-  updateConnectionParameters(deviceInstanceId: string, options: ConnectionParameters, callback?: (err: any) => void): void;
-  rejectConnParams(deviceInstanceId: string, callback?: (err: any) => void): void;
-  requestAttMtu(deviceInstanceId: string, mtu: number, callback?: (err: any, value: number) => void): void;
-  getCurrentAttMtu(deviceInstanceId: string): number|undefined;
+  updateConnectionParameters(
+    deviceInstanceId: string,
+    options: ConnectionParameters,
+    callback?: (err: any) => void
+  ): void;
+  rejectConnParams(
+    deviceInstanceId: string,
+    callback?: (err: any) => void
+  ): void;
+  requestAttMtu(
+    deviceInstanceId: string,
+    mtu: number,
+    callback?: (err: any, value: number) => void
+  ): void;
+  getCurrentAttMtu(deviceInstanceId: string): number | undefined;
 
   getService(serviceInstanceId: string): Service;
-  getServices(deviceInstanceId: string, callback?: (err: any, services: Array<Service>) => void): void;
+  getServices(
+    deviceInstanceId: string,
+    callback?: (err: any, services: Array<Service>) => void
+  ): void;
   getCharacteristic(characteristicId: string): Characteristic;
-  getCharacteristics(serviceInstanceId: string, callback?: (err: any, services: Array<Characteristic>) => void): void;
+  getCharacteristics(
+    serviceInstanceId: string,
+    callback?: (err: any, services: Array<Characteristic>) => void
+  ): void;
   getDescriptor(descriptorId: string): Descriptor;
-  getDescriptors(characteristicId: string, callback?: (err?: any, descriptors?: Array<Descriptor>) => void): void;
-  readCharacteristicValue(characteristicId: string, callback?: (err: any, bytesRead: Array<number>) => void): void;
-  writeCharacteristicValue(characteristicId: string, value: Array<number>, ack: boolean, callback?: (error: Error) => void): void;
-  readDescriptorValue(descriptorId: string, callback?: (err: any, value: Array<number>) => void): void;
-  writeDescriptorValue(descriptorId: string, value: Array<number>, ack: boolean, callback?: (error: Error) => void): void;
+  getDescriptors(
+    characteristicId: string,
+    callback?: (err?: any, descriptors?: Array<Descriptor>) => void
+  ): void;
+  readCharacteristicValue(
+    characteristicId: string,
+    callback?: (err: any, bytesRead: Array<number>) => void
+  ): void;
+  writeCharacteristicValue(
+    characteristicId: string,
+    value: Array<number>,
+    ack: boolean,
+    callback?: (error: Error) => void
+  ): void;
+  readDescriptorValue(
+    descriptorId: string,
+    callback?: (err: any, value: Array<number>) => void
+  ): void;
+  writeDescriptorValue(
+    descriptorId: string,
+    value: Array<number>,
+    ack: boolean,
+    callback?: (error: Error) => void
+  ): void;
 
-  authenticate(deviceInstanceId: string, secParams: any, callback?: (err: any) => void): void;
-  replySecParams(deviceInstanceId: string, secStatus: number, secParams: SecurityParameters | null, secKeys: SecurityKeys | null, callback?: (err: any, keyset?: any) => void): void;
-  replyLescDhkey(deviceInstanceId: string, key: any, callback?: (err: any) => void): void;
-  replyAuthKey(deviceInstanceId: string, keyType: any, key: any, callback?: (err: any) => void): void;
-  notifyKeypress(deviceInstanceId: string, notificationType: any, callback?: (err: any) => void): void;
-  getLescOobData(deviceInstanceId: string, ownPublicKey: string, callback?: (err: any) => void): void;
-  setLescOobData(deviceInstanceId: string, ownOobData: string, peerOobData: string, callback?: (err: any) => void): void;
-  encrypt(deviceInstanceId: string, masterId: any, encInfo: any, callback?: (err: any) => void): void;
-  secInfoReply(deviceInstanceId: string, encInfo: any, idInfo: any, signInfo: any, callback?: (err: any) => void): void;
+  authenticate(
+    deviceInstanceId: string,
+    secParams: any,
+    callback?: (err: any) => void
+  ): void;
+  replySecParams(
+    deviceInstanceId: string,
+    secStatus: number,
+    secParams: SecurityParameters | null,
+    secKeys: SecurityKeys | null,
+    callback?: (err: any, keyset?: any) => void
+  ): void;
+  replyLescDhkey(
+    deviceInstanceId: string,
+    key: any,
+    callback?: (err: any) => void
+  ): void;
+  replyAuthKey(
+    deviceInstanceId: string,
+    keyType: any,
+    key: any,
+    callback?: (err: any) => void
+  ): void;
+  notifyKeypress(
+    deviceInstanceId: string,
+    notificationType: any,
+    callback?: (err: any) => void
+  ): void;
+  getLescOobData(
+    deviceInstanceId: string,
+    ownPublicKey: string,
+    callback?: (err: any) => void
+  ): void;
+  setLescOobData(
+    deviceInstanceId: string,
+    ownOobData: string,
+    peerOobData: string,
+    callback?: (err: any) => void
+  ): void;
+  encrypt(
+    deviceInstanceId: string,
+    masterId: any,
+    encInfo: any,
+    callback?: (err: any) => void
+  ): void;
+  secInfoReply(
+    deviceInstanceId: string,
+    encInfo: any,
+    idInfo: any,
+    signInfo: any,
+    callback?: (err: any) => void
+  ): void;
 
-  on(event: 'secParamsRequest', listener: (device: Device, peer_params: SecurityParameters) => void): this;
+  on(
+    event: 'secParamsRequest',
+    listener: (device: Device, peer_params: SecurityParameters) => void
+  ): this;
   on(event: 'error', listener: (error: Error) => void): this;
-  on(event: 'stateChanged', listener: (adapterState: AdapterState) => void): this;
+  on(
+    event: 'stateChanged',
+    listener: (adapterState: AdapterState) => void
+  ): this;
   on(event: 'warning', listener: (warning: Error) => void): this;
   on(event: 'opened', listener: (adapter: Adapter) => void): this;
   on(event: 'closed', listener: (adapter: Adapter) => void): this;
   on(event: 'status', listener: (status: AdapterStatus) => void): this;
-  on(event: 'logMessage', listener: (severity: string, message: string) => void): this;
+  on(
+    event: 'logMessage',
+    listener: (severity: string, message: string) => void
+  ): this;
   on(event: 'deviceConnected', listener: (device: Device) => void): this;
-  on(event: 'deviceDisconnected', listener: (device: Device, reason_name: string, reason: string) => void): this;
-  on(event: 'connParamUpdate', listener: (device: Device, connectionParameters: ConnectionParameters) => void): this;
-  on(event: 'connSecUpdate', listener: (device: Device, conn_sec: AuthParameters) => void): this;
-  on(event: 'securityChanged', listener: (device: Device, authParameters: AuthParameters) => void): this;
-  on(event: 'authStatus', listener: (device: Device, status: AuthStatus) => void): this;
-  on(event: 'passkeyDisplay', listener: (device: Device, matchRequest: number, passkey: string) => void): this;
-  on(event: 'authKeyRequest', listener: (device: Device, keyType: string) => void): this;
-  on(event: 'keyPressed', listener: (device: Device, keyPressNotificationType: string) => void): this;
-  on(event: 'lescDhkeyRequest', listener: (device: Device, pk_peer: any) => void): this; // FIXME: define pk_peer
-  on(event: 'secInfoRequest', listener: (device: Device, event: any) => void): this; // FIXME: define event
-  on(event: 'securityRequest', listener: (device: Device, event: any) => void): this; // FIXME: define event
-  on(event: 'connParamUpdateRequest', listener: (device: Device, connectionParameters: ConnectionParameters) => void): this;
+  on(
+    event: 'deviceDisconnected',
+    listener: (device: Device, reason_name: string, reason: string) => void
+  ): this;
+  on(
+    event: 'connParamUpdate',
+    listener: (
+      device: Device,
+      connectionParameters: ConnectionParameters
+    ) => void
+  ): this;
+  on(
+    event: 'connSecUpdate',
+    listener: (device: Device, conn_sec: AuthParameters) => void
+  ): this;
+  on(
+    event: 'securityChanged',
+    listener: (device: Device, authParameters: AuthParameters) => void
+  ): this;
+  on(
+    event: 'authStatus',
+    listener: (device: Device, status: AuthStatus) => void
+  ): this;
+  on(
+    event: 'passkeyDisplay',
+    listener: (device: Device, matchRequest: number, passkey: string) => void
+  ): this;
+  on(
+    event: 'authKeyRequest',
+    listener: (device: Device, keyType: string) => void
+  ): this;
+  on(
+    event: 'keyPressed',
+    listener: (device: Device, keyPressNotificationType: string) => void
+  ): this;
+  on(
+    event: 'lescDhkeyRequest',
+    listener: (device: Device, pk_peer: any) => void
+  ): this; // FIXME: define pk_peer
+  on(
+    event: 'secInfoRequest',
+    listener: (device: Device, event: any) => void
+  ): this; // FIXME: define event
+  on(
+    event: 'securityRequest',
+    listener: (device: Device, event: any) => void
+  ): this; // FIXME: define event
+  on(
+    event: 'connParamUpdateRequest',
+    listener: (
+      device: Device,
+      connectionParameters: ConnectionParameters
+    ) => void
+  ): this;
   on(event: 'deviceDiscovered', listener: (device: Device) => void): this;
   on(event: 'advertiseTimeout', listener: () => void): this;
   on(event: 'scanTimedOut', listener: () => void): this;
   on(event: 'connectTimedOut', listener: (address: Address) => void): this;
-  on(event: 'securityRequestTimedOut', listener: (device: Device) => void): this;
+  on(
+    event: 'securityRequestTimedOut',
+    listener: (device: Device) => void
+  ): this;
   on(event: 'serviceAdded', listener: (service: Service) => void): this;
-  on(event: 'characteristicAdded', listener: (characteristic: Characteristic) => void): this;
-  on(event: 'descriptorAdded', listener: (descriptor: Descriptor) => void): this;
-  on(event: 'characteristicValueChanged', listener: (characteristic: Characteristic) => void): this;
-  on(event: 'descriptorValueChanged', listener: (descriptor: Descriptor) => void): this;
-  on(event: 'attMtuChanged', listener: (device: Device, newMtu: number) => void): this;
-  on(event: 'deviceNotifiedOrIndicated', listener: (remoteDevice: Device, characteristic: Characteristic) => void): this;
-  on(event: 'txComplete', listener: (remoteDevice: Device, count: number) => void): this;
-  on(event: 'dataLengthChanged', listener: (remoteDevice: Device, maxTxOctets: number) => void): this;
+  on(
+    event: 'characteristicAdded',
+    listener: (characteristic: Characteristic) => void
+  ): this;
+  on(
+    event: 'descriptorAdded',
+    listener: (descriptor: Descriptor) => void
+  ): this;
+  on(
+    event: 'characteristicValueChanged',
+    listener: (characteristic: Characteristic) => void
+  ): this;
+  on(
+    event: 'descriptorValueChanged',
+    listener: (descriptor: Descriptor) => void
+  ): this;
+  on(
+    event: 'attMtuChanged',
+    listener: (device: Device, newMtu: number) => void
+  ): this;
+  on(
+    event: 'deviceNotifiedOrIndicated',
+    listener: (remoteDevice: Device, characteristic: Characteristic) => void
+  ): this;
+  on(
+    event: 'txComplete',
+    listener: (remoteDevice: Device, count: number) => void
+  ): this;
+  on(
+    event: 'dataLengthChanged',
+    listener: (remoteDevice: Device, maxTxOctets: number) => void
+  ): this;
 }
 
 export declare class AdapterFactory extends EventEmitter {
   static getInstance(): AdapterFactory;
   getAdapters(callback?: (err: any, adapters: Adapter[]) => void): void;
-  createAdapter(sdVersion: 'v2' | 'v5', path: string, instanceId: string): Adapter;
+  createAdapter(
+    sdVersion: 'v2' | 'v5',
+    path: string,
+    instanceId: string
+  ): Adapter;
+  adapterList: Adapter[];
 }
 
 export declare class ServiceFactory {
   createService(uuid: string, serviceType: string): Service;
-  createCharacteristic(service: Service, uuid: string, value: Array<number>, properties: any, options: any): Characteristic;
-  createDescriptor(characteristic: Characteristic, uuid: string, value: Array<number>, options: any): Descriptor;
+  createCharacteristic(
+    service: Service,
+    uuid: string,
+    value: Array<number>,
+    properties: any,
+    options: any
+  ): Characteristic;
+  createDescriptor(
+    characteristic: Characteristic,
+    uuid: string,
+    value: Array<number>,
+    options: any
+  ): Descriptor;
 }
 
 export declare interface KeyPair {
@@ -309,8 +487,14 @@ export declare interface DfuTransportParameters {
 }
 
 export declare class Dfu extends EventEmitter {
-  constructor(transportType: string, transportParameters: DfuTransportParameters);
-  performDFU(zipFilePath: string, callback: (err?: any, abort?: boolean) => void): void;
+  constructor(
+    transportType: string,
+    transportParameters: DfuTransportParameters
+  );
+  performDFU(
+    zipFilePath: string,
+    callback: (err?: any, abort?: boolean) => void
+  ): void;
   abort(): void;
 }
 

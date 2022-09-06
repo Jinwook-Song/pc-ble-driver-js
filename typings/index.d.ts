@@ -124,7 +124,9 @@ export declare interface AdapterState {
 export declare interface Device {
   instanceId: string;
   address: string;
+  _address: string;
   addressType: string;
+  _addressType: string;
   role: string;
   connectionHandle: number;
   connected: boolean;
@@ -135,6 +137,7 @@ export declare interface Device {
   connectionSupervisionTimeout: number;
   paired: boolean;
   name: string;
+  specificData: number[];
   rssi: number;
   rssi_level: number;
   advType: string;

@@ -84,6 +84,7 @@ class Device {
         this.adData = {};
 
         this.name = null;
+        this.specificData = null
         this._role = role;
         this.services = [];
         this.flags = [];
@@ -175,10 +176,21 @@ class Device {
         this.rssi = event.rssi;
         this.advType = event.adv_type;
         this.txPower = event.data ? event.data.BLE_GAP_AD_TYPE_TX_POWER_LEVEL : undefined;
+        this._findAndSetSpecificFromAdvertisingData(event.data);
         this._findAndSetNameFromAdvertisingData(event.data);
         this._processAndSetServiceUuidsFromAdvertisingData(event.data);
         this._processFlagsFromAdvertisingData(event.data);
         this._setRssiLevel();
+    }
+
+    _findAndSetSpecificFromAdvertisingData(advertisingData) {
+        if (advertisingData) {
+            if (advertisingData.BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA) {
+                this.specificData = advertisingData.BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA;
+            } 
+        } else {
+            this.specificData = null;
+        }
     }
 
     _findAndSetNameFromAdvertisingData(advertisingData) {
